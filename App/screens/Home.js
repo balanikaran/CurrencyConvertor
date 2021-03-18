@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   StatusBar,
@@ -7,7 +7,6 @@ import {
   Dimensions,
   Text,
   ScrollView,
-  Keyboard,
 } from "react-native";
 import { format } from "date-fns";
 
@@ -15,6 +14,7 @@ import ConversionInput from "../components/ConversionInput";
 import Button from "../components/Button";
 
 import colors from "../constants/colors";
+import KeyboardSpacer from "../components/KeyboardSpacer";
 
 const screen = Dimensions.get("window");
 
@@ -62,27 +62,6 @@ export default () => {
 
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      () => {
-        setIsKeyboardVisible(true);
-      }
-    );
-
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setIsKeyboardVisible(false);
-      }
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
-
   return (
     <View style={styles.container}>
       <ScrollView scrollEnabled={isKeyboardVisible}>
@@ -128,8 +107,10 @@ export default () => {
 
           <Button onPress={() => alert("todo!")} text="Reverse Currencies" />
 
-          {/* this is extra spacing */}
-          <View style={{ height: screen.height }} />
+          {/* this is dynamic extra spacing */}
+          <KeyboardSpacer
+            onToggle={(isKeyboardOpen) => setIsKeyboardVisible(isKeyboardOpen)}
+          />
         </View>
       </ScrollView>
     </View>
