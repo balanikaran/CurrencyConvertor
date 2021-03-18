@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   Text,
+  ScrollView,
 } from "react-native";
 import { format } from "date-fns";
 
@@ -20,7 +21,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.blue,
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
+  },
+  content: {
+    paddingTop: screen.height * 0.2,
   },
   logoContainer: {
     alignItems: "center",
@@ -57,46 +61,53 @@ export default () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
-      <View style={styles.logoContainer}>
-        <Image
-          source={require("../assets/images/background.png")}
-          style={styles.logoBackground}
-          resizeMode="contain"
-        />
-        <Image
-          source={require("../assets/images/logo.png")}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-      </View>
+      <ScrollView>
+        <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
+        <View style={styles.content}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../assets/images/background.png")}
+              style={styles.logoBackground}
+              resizeMode="contain"
+            />
+            <Image
+              source={require("../assets/images/logo.png")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
 
-      <Text style={styles.textHeader}>Currency Converter</Text>
+          <Text style={styles.textHeader}>Currency Converter</Text>
 
-      <ConversionInput
-        text="USD"
-        value="123"
-        onButtonPress={() => alert("todo!")}
-        onChangeText={(text) => console.log("text", text)}
-        keyboardType="numeric"
-      />
-      <ConversionInput
-        text="GBP"
-        value="123"
-        onButtonPress={() => alert("todo!")}
-        onChangeText={(text) => console.log("text", text)}
-        keyboardType="numeric"
-        editable={false}
-      />
+          <ConversionInput
+            text="USD"
+            value="123"
+            onButtonPress={() => alert("todo!")}
+            onChangeText={(text) => console.log("text", text)}
+            keyboardType="numeric"
+          />
+          <ConversionInput
+            text="GBP"
+            value="123"
+            onButtonPress={() => alert("todo!")}
+            onChangeText={(text) => console.log("text", text)}
+            keyboardType="numeric"
+            editable={false}
+          />
 
-      <Text style={styles.infoText}>
-        {`1 ${baseCurrency} = ${conversionRate} ${targetCurrency} as of ${format(
-          date,
-          "MMMM do, yyyy"
-        )}`}
-      </Text>
+          <Text style={styles.infoText}>
+            {`1 ${baseCurrency} = ${conversionRate} ${targetCurrency} as of ${format(
+              date,
+              "MMMM do, yyyy"
+            )}`}
+          </Text>
 
-      <Button onPress={() => alert("todo!")} text="Reverse Currencies" />
+          <Button onPress={() => alert("todo!")} text="Reverse Currencies" />
+
+          {/* this is extra spacing */}
+          <View style={{ height: screen.height }} />
+        </View>
+      </ScrollView>
     </View>
   );
 };
