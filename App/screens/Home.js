@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StatusBar,
@@ -7,6 +7,7 @@ import {
   Dimensions,
   Text,
   ScrollView,
+  Keyboard,
 } from "react-native";
 import { format } from "date-fns";
 
@@ -59,9 +60,32 @@ export default () => {
   const conversionRate = 0.8345;
   const date = new Date();
 
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setIsKeyboardVisible(true);
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setIsKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView scrollEnabled={isKeyboardVisible}>
         <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
         <View style={styles.content}>
           <View style={styles.logoContainer}>
