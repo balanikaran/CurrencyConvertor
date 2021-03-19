@@ -7,7 +7,10 @@ import {
   Dimensions,
   Text,
   ScrollView,
+  TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
+import { Entypo } from "@expo/vector-icons";
 import { format } from "date-fns";
 
 import ConversionInput from "../components/ConversionInput";
@@ -25,7 +28,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   content: {
-    paddingTop: screen.height * 0.2,
+    paddingTop: screen.height * 0.1,
   },
   logoContainer: {
     alignItems: "center",
@@ -52,9 +55,13 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: "center",
   },
+  optionsButton: {
+    alignItems: "flex-end",
+    marginHorizontal: 20,
+  },
 });
 
-export default () => {
+export default ({ navigation }) => {
   const baseCurrency = "USD";
   const targetCurrency = "GBP";
   const conversionRate = 0.8345;
@@ -66,6 +73,13 @@ export default () => {
     <View style={styles.container}>
       <ScrollView scrollEnabled={isKeyboardVisible}>
         <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
+
+        <SafeAreaView style={styles.optionsButton}>
+          <TouchableOpacity onPress={() => navigation.push("Options")}>
+            <Entypo name="cog" size={32} color={colors.white} />
+          </TouchableOpacity>
+        </SafeAreaView>
+
         <View style={styles.content}>
           <View style={styles.logoContainer}>
             <Image
@@ -85,14 +99,18 @@ export default () => {
           <ConversionInput
             text="USD"
             value="123"
-            onButtonPress={() => alert("todo!")}
+            onButtonPress={() =>
+              navigation.push("CurrencyList", { title: "Base Currency" })
+            }
             onChangeText={(text) => console.log("text", text)}
             keyboardType="numeric"
           />
           <ConversionInput
             text="GBP"
             value="123"
-            onButtonPress={() => alert("todo!")}
+            onButtonPress={() =>
+              navigation.push("CurrencyList", { title: "Quote Currency" })
+            }
             onChangeText={(text) => console.log("text", text)}
             keyboardType="numeric"
             editable={false}

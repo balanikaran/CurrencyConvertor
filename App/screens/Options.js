@@ -1,5 +1,11 @@
 import React from "react";
-import { Alert, Linking, SafeAreaView, ScrollView } from "react-native";
+import {
+  Alert,
+  Linking,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+} from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
 import colors from "../constants/colors";
@@ -15,6 +21,7 @@ const openUrl = (url) => {
 export default () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
       <ScrollView>
         <RowItem
           text="Themes"
